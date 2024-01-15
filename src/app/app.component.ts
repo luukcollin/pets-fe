@@ -28,6 +28,7 @@ export class AppComponent implements OnInit {
   });
 
   visibleRows$: Observable<Pet[]> = new BehaviorSubject<Pet[]>([]);
+  rows$ = new BehaviorSubject<Pet[]>([]);
 
   newId = '';
   newName = '';
@@ -61,9 +62,10 @@ export class AppComponent implements OnInit {
     private store: Store,
   ) {
     this.filterq$.subscribe((value) => this.onFilterChanged(value));
-    this.availablePets$.subscribe(
-      () => (this.visibleRows$ = this.availablePets$),
-    );
+    this.availablePets$.subscribe((values) => {
+      this.rows$.next(values);
+      this.visibleRows$ = this.rows$;
+    });
   }
 
   async onFilterChanged(statusFilter: string) {
