@@ -23,7 +23,7 @@ export class AppComponent implements OnInit {
   title = 'app';
   petForm = new FormGroup({
     name: new FormControl('', [Validators.required]),
-    photoUrls: new FormControl([], [Validators.required]),
+    photoUrls: new FormControl('', [Validators.required]),
     id: new FormControl('', [Validators.required]),
   });
 
@@ -121,26 +121,17 @@ export class AppComponent implements OnInit {
   onSubmit() {
     if (this.petForm.valid) {
       const petData = this.petForm.value;
-      const category = { id: 1, name: 'Dogs' };
-      const tags = { id: 0, name: 'string' };
       const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-      const requestObj = JSON.stringify({
-        id: getIdOrFallbackId(petData.id),
-        name: petData.name || '',
-        photoUrls: petData.photoUrls || [''],
-        category,
-        tags,
-      });
       this.dataService
         .addPet(
           {
-            id: 857412,
-            name: 'xmy',
+            id: getIdOrFallbackId(petData.id),
+            name: petData.name || '',
             category: {
               id: 1,
               name: 'Dogs',
             },
-            photoUrls: ['string'],
+            photoUrls: [petData.photoUrls] || [''],
             tags: [
               {
                 id: 0,
