@@ -1,0 +1,16 @@
+<div class="table-container">
+    <table class="futuristic-table">
+        <tr>
+            <th *ngFor="let column of columns" class="table-header" (click)="onHeaderClick(column.key)">{{column.label}}
+            </th>
+        </tr>
+        <tr *ngFor="let row of rows" [ngClass]="getRowEntryClassName(row.id)" (click)="onRowClick(row)">
+            <td>{{row.id}}</td>
+            <td>{{row.name}}</td>
+            <td>{{row.status}}</td>
+            <td>{{row.photoUrls.length}}</td>
+            <img src="https://www.pngmart.com/files/16/Trash-Clipart-Transparent-Background.png"
+                *ngIf="selectedRow === row" (click)="removeRow(row.id)" class="remove" />
+        </tr>
+    </table>
+</div>

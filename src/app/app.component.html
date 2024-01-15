@@ -1,0 +1,25 @@
+<div id="app-container">
+  <div id="pet-details" *ngIf="selectedPet">
+    <h2>{{selectedPet.name}}</h2>
+    <img *ngFor="let photo of selectedPet.photoUrls" class="pikachu" [src]="photo"/>
+  </div> 
+  <div id="selection">
+    <div id="filter">
+    <span>Filter by status (debounced): </span>
+    <input id="status-input" type="text" name="status-filter" [value]="filterq$ | async" (input)="updateFilter($event)" />
+  </div>
+    <app-table [columns]="petProperties" [rows]="visibleRows$ | async" [selectedRow]="selectedPet"
+      (clickedPet)="changPetSelection($event)"
+      (removePet)="removePetWithId($event)"></app-table>
+  </div>
+</div>
+
+<form id="add-pet" [formGroup]="petForm" (ngSubmit)="onSubmit()">    
+<label> id (auto generated, maar voor het idee):</label>
+<input type="text" formControlName="id"/>
+<label>name:</label>
+<input type="text" formControlName="name"/>
+<label>image:</label>
+<input type="text" formControlName="photoUrls"/>
+<button type="submit" [disabled]="petForm.invalid">Add pet!</button>
+</form>

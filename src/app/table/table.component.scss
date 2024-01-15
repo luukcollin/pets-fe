@@ -1,0 +1,88 @@
+
+.table-container {
+    background: linear-gradient(60deg, #00ff00, #00f0f0);
+    
+}
+
+
+
+.futuristic-table {
+    background: rgba(255,255,255,.455);
+    font-weight: bold;
+    border-radius: 10px;
+    box-shadow: 0 10px 15px -5px rgba(0, 0, 0, 0.2);
+
+}
+
+table {
+        border-collapse: collapse;
+}
+
+
+th {
+    color:black;
+
+ 
+}
+
+table,
+td
+{
+    color: rgba(244,244,244,.9);
+    border-bottom: 1px solid orange;
+    text-align: center;
+    font-size: 2ch;
+
+
+}
+
+th,tr {
+    cursor: pointer;
+    width: 20vw;
+
+    &:hover {
+        // filter: brightness(1.3);
+    }
+
+        
+}
+
+
+.row-entry {
+    background-color: rgba(30, 30, 30, .88);
+
+&:hover{
+    background-color: rgba(0, 0, 0, .4);
+}
+
+  >td {
+      color: azure;
+  }
+
+    &.selected {
+        // filter: invert(1);
+        color: white;;
+
+    }
+
+ 
+}
+
+
+.table-header {
+    &:hover {
+        background-color: rgba(235,235,235,.35);
+    }
+}
+
+
+   .remove {
+        content: '';
+            position: relative;
+            top: 0;
+            right: 0;
+            width: 20px;
+            height: 20px;
+            background-image: url('https://www.pngmart.com/files/16/Trash-Clipart-Transparent-Background.png');
+            background-size: 20px;
+   }
