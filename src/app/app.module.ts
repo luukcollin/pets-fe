@@ -9,10 +9,7 @@ import { NgxsModule } from '@ngxs/store';
 import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-
-  ],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     FormsModule,
@@ -20,9 +17,9 @@ import { HttpClientModule } from '@angular/common/http';
     PetsStoreModule,
     HttpClientModule,
     ReactiveFormsModule,
-    NgxsModule.forRoot()
-      ],
-  providers: [ ],
-  bootstrap: [AppComponent]
+    NgxsModule.forRoot(),
+  ],
+  providers: [],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

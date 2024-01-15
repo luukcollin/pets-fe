@@ -1,8 +1,8 @@
-import { NgModule } from "@angular/core";
-import { NgxsModule } from "@ngxs/store";
-import { PetsState } from "./pets.state";
+import { NgModule } from '@angular/core';
+import { NgxsModule } from '@ngxs/store';
+import { PetsState } from './pets.state';
 
 @NgModule({
-    imports: [NgxsModule.forFeature([PetsState])]
+  imports: [NgxsModule.forFeature([PetsState])],
 })
-export class PetsStoreModule{}
+export class PetsStoreModule {}

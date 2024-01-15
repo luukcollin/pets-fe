@@ -5,22 +5,20 @@ import { Column } from 'src/models/table.model';
 @Component({
   selector: 'app-table',
   templateUrl: './table.component.html',
-  styleUrls: ['./table.component.scss']
+  styleUrls: ['./table.component.scss'],
 })
 export class TableComponent {
-
   private _rows: Pet[] = [];
 
   @Input()
-  set rows(value: Pet[] | null){
-    if(value === null) return;
+  set rows(value: Pet[] | null) {
+    if (value === null) return;
     this._rows = value;
   }
 
   get rows(): Pet[] {
     return this._rows;
   }
- 
 
   @Input()
   columns: Column[] = [];
@@ -34,17 +32,14 @@ export class TableComponent {
   @Output()
   removePet = new EventEmitter<number>();
 
-
-  private sortingConfig = { key: "id", order: "desc" }
+  private sortingConfig = { key: 'id', order: 'desc' };
 
   onRowClick(row: Pet) {
-    this.clickedPet.emit(row)
+    this.clickedPet.emit(row);
   }
 
   onHeaderClick(headerKey: string) {
     this.updateSortPreference(headerKey);
-
-
   }
 
   updateSortingConfig(columnKey: string) {
@@ -53,18 +48,19 @@ export class TableComponent {
   }
 
   getRowEntryClassName(id: number) {
-    const baseClassname = "row-entry "
-    return this.selectedRow?.id === id ? baseClassname + "selected" : baseClassname;
+    const baseClassname = 'row-entry ';
+    return this.selectedRow?.id === id
+      ? baseClassname + 'selected'
+      : baseClassname;
   }
 
-
   removeRow(id: number) {
-    this.removePet.emit(id)
+    this.removePet.emit(id);
   }
 
   compareFn(a: Pet, b: Pet) {
     const key = this.sortingConfig.key as keyof Pet;
-    const orderReverse = this.sortingConfig.order === "asc" ? 1 : -1;
+    const orderReverse = this.sortingConfig.order === 'asc' ? 1 : -1;
     const subjectA = a[key] as string;
     const subjectB = b[key] as string;
     if (subjectA < subjectB) {
@@ -78,20 +74,16 @@ export class TableComponent {
 
   updateSortPreference(keyChange: string) {
     this.updateSortingConfig(keyChange);
-    this.sort()
+    this.sort();
   }
 
   sort() {
-    console.log(this.sortingConfig)
+    console.log(this.sortingConfig);
 
     this.rows = this.rows.sort((a, b) => this.compareFn(a, b));
-
-
   }
 }
 
 function reverseOrder(order: string) {
-  return order === "asc" ? "desc" : "asc"
-
+  return order === 'asc' ? 'desc' : 'asc';
 }
-

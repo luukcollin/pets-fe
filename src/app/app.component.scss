@@ -1,33 +1,31 @@
 :root {
-    --vertical-margin: 1em;
-    --horizontal-margin: .75em;
+  --vertical-margin: 1em;
+  --horizontal-margin: 0.75em;
 }
 #app-container {
-position: relative;
- display: flex;
- flex-direction: column;
- }
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
 
 app-table {
-    margin-top: var(--vertical-margin)
+  margin-top: var(--vertical-margin);
 }
- #pet-details {   
-    .pikachu {
-        width: 100px;
-        height: auto;
-    }
- }
-
+#pet-details {
+  .pikachu {
+    width: 100px;
+    height: auto;
+  }
+}
 
 #filter {
-    margin-left:var(--horizontal-margin);
-    margin-top:  var(--vertical-margin);
+  margin-left: var(--horizontal-margin);
+  margin-top: var(--vertical-margin);
 }
 
-
 #add-pet {
-    position: absolute;
+  position: absolute;
 
-    margin-top: var(--vertical-margin);
-    margin-right: var(--horizontal-margin);
+  margin-top: var(--vertical-margin);
+  margin-right: var(--horizontal-margin);
 }

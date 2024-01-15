@@ -1,9 +1,9 @@
-import { Pet } from "src/models/api";
+import { Pet } from 'src/models/api';
 
 export interface PetsStateModel {
-    allPets: Pet[];
-    availablePets: Pet[];
-    pendingPets: Pet[];
-    soldPets: Pet[];
-    filterQ: string;
+  allPets: Pet[];
+  availablePets: Pet[];
+  pendingPets: Pet[];
+  soldPets: Pet[];
+  filterQ: string;
 }
