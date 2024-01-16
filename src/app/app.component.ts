@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngxs/store';
 import {
   BehaviorSubject,
   Observable,
+  Subscription,
   debounceTime,
   distinctUntilChanged,
 } from 'rxjs';
@@ -19,7 +20,7 @@ import { HttpHeaders } from '@angular/common/http';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnDestroy {
   title = 'app';
   petForm = new FormGroup({
     name: new FormControl('', [Validators.required]),
@@ -56,16 +57,23 @@ export class AppComponent implements OnInit {
     .select(PetsState.pendingPets)
     .pipe(distinctUntilChanged());
   readonly filterq$ = this.store.select(PetsState.filterQ);
-
+  private appSubscriptions: Subscription[] = [];
+  private soldSub?: Subscription;
+  private availableSub?: Subscription;
+  private pendingSub?: Subscription;
   constructor(
     private dataService: DataService,
     private store: Store,
   ) {
-    this.filterq$.subscribe((value) => this.onFilterChanged(value));
-    this.availablePets$.subscribe((values) => {
+    const filterQSub = this.filterq$.subscribe((value) =>
+      this.onFilterChanged(value),
+    );
+    const availablePetsSubs = this.availablePets$.subscribe((values) => {
       this.rows$.next(values);
       this.visibleRows$ = this.rows$;
     });
+    this.appSubscriptions.push(filterQSub);
+    this.appSubscriptions.push(availablePetsSubs);
   }
 
   async onFilterChanged(statusFilter: string) {
@@ -80,24 +88,31 @@ export class AppComponent implements OnInit {
   }
 
   async ngOnInit() {
-    this.dataService
+    this.soldSub = this.dataService
       .getPets('sold')
       .pipe(distinctUntilChanged())
       .subscribe((pets) =>
         this.store.dispatch(new PetsActions.SetSoldPets(pets)),
       );
-    this.dataService
+    this.pendingSub = this.dataService
       .getPets('pending')
       .pipe(distinctUntilChanged())
       .subscribe((pets) =>
         this.store.dispatch(new PetsActions.SetPendingPets(pets)),
       );
-    this.dataService
+    this.availableSub = this.dataService
       .getPets('available')
       .pipe(distinctUntilChanged())
       .subscribe((pets) =>
         this.store.dispatch(new PetsActions.SetAvailablePets(pets)),
       );
+    this.appSubscriptions.push(this.availableSub);
+    this.appSubscriptions.push(this.pendingSub);
+    this.appSubscriptions.push(this.availableSub);
+  }
+
+  ngOnDestroy() {
+    this.appSubscriptions.forEach((sub) => sub.unsubscribe());
   }
 
   updateFilter(event: Event) {
@@ -144,8 +159,16 @@ export class AppComponent implements OnInit {
           },
           headers,
         )
-        .subscribe((response) => {
-          console.log(response);
+        .subscribe({
+          next: (response) => {
+            console.log(response);
+          },
+          error: (err) => {
+            console.error(err);
+          },
+          complete: () => {
+            console.log('Observable completed');
+          },
         });
     }
   }

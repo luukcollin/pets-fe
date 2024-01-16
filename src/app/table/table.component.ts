@@ -78,8 +78,6 @@ export class TableComponent {
   }
 
   sort() {
-    console.log(this.sortingConfig);
-
     this.rows = this.rows.sort((a, b) => this.compareFn(a, b));
   }
 }

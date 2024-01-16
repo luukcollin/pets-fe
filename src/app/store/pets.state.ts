@@ -10,7 +10,6 @@ const PET_STATE_TOKEN = new StateToken<PetsStateModel>('pets');
 @State<PetsStateModel>({
   name: PET_STATE_TOKEN,
   defaults: {
-    allPets: [],
     availablePets: [],
     pendingPets: [],
     soldPets: [],
